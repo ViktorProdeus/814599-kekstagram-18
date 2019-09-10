@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Виктор Продеус](https://up.htmlacademy.ru/javascript/18/user/814599).
-* Наставник: `Неизвестно`.
+* Наставник: ![Неизвестно](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ25WxDEnMLYsGn5fumaKxqvRFJmExFsFiw3EiWwQjIj0y4Asj).
 
 ---
 
