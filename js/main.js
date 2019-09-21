@@ -124,9 +124,9 @@ description.textContent = dataPictures[0].description;
 var socialCommentCount = bigPicture.querySelector('.social__comment-count');
 var commentsLoader = bigPicture.querySelector('.comments-loader');
 
-var hidesElement = function (element) {
+var hideElement = function (element) {
   element.classList.add('visually-hidden');
 };
 
-hidesElement(socialCommentCount);
-hidesElement(commentsLoader);
+hideElement(socialCommentCount);
+hideElement(commentsLoader);
