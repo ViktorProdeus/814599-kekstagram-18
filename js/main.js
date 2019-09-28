@@ -3,7 +3,6 @@
 // Данные из ТЗ
 
 var AMOUNT_IMAGES = 25;
-
 var LIKES_MIN = 15;
 var LIKES_MAX = 200;
 
@@ -11,11 +10,22 @@ var AMOUNT_AVATARS = 6;
 var NAMES = ['Артем', 'Рома', 'Эльдар', 'Мухамед', 'Вероника', 'Аркадий', 'Кекс', 'Дима', 'Борис', 'Толик'];
 var MESSAGES = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 var AMOUNT_COMMENTS = 10;
-
+var DESCRIPTIONS = ['Класная фотка!', 'Хороший ракурс', 'Удачный кадр', 'Нужно закинуть в Инстаграмм', 'Эту фотку нужно удалить', 'Крутяк WOW! WOW!'];
 
 // Функция, возвращающая случайное число в диапазоне
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+var shuffleArray = function (array) {
+  var tempArray = array.slice();
+  for (var i = tempArray.length - 1; i > 0; i--) {
+    var j = getRandomNumber(0, i);
+    var temp = tempArray[i];
+    tempArray[i] = tempArray[j];
+    tempArray[j] = temp;
+  }
+  return tempArray;
 };
 
 // Функция, возвращающая случайный элемемент массива
@@ -26,6 +36,11 @@ var getRandomElement = function (array) {
   return randomElement;
 };
 
+var generateMessage = function (array) {
+  var len = Math.random() > 0.5 ? 1 : 2;
+  return shuffleArray(array).slice(0, len).join(' ');
+};
+
 // Функция, которая создает массив комментариев
 var createUserComments = function () {
   var userComments = [];
@@ -34,11 +49,10 @@ var createUserComments = function () {
   for (var i = 1; i <= count; i++) {
     userComments.push({
       avatar: 'img/avatar-' + getRandomNumber(1, AMOUNT_AVATARS) + '.svg',
-      message: getRandomElement(MESSAGES),
+      message: generateMessage(MESSAGES),
       name: getRandomElement(NAMES)
     });
   }
-
   return userComments;
 };
 
@@ -53,7 +67,7 @@ var createUserPictures = function () {
       url: 'photos/' + i + '.jpg',
       likes: getRandomNumber(LIKES_MIN, LIKES_MAX),
       comments: createUserComments(),
-      description: 'описание фотографии'
+      description: getRandomElement(DESCRIPTIONS)
     });
   }
 
@@ -95,14 +109,12 @@ addtoContainer(dataPictures);
 var bigPicture = document.querySelector('.big-picture');
 bigPicture.classList.remove('hidden');
 
-
 var fullPhoto = bigPicture.querySelector('.big-picture__img img');
 var likesCount = bigPicture.querySelector('.likes-count');
 var commentsCount = bigPicture.querySelector('.comments-count');
 var socialComments = bigPicture.querySelector('.social__comments');
 var socialComment = socialComments.querySelector('.social__comment');
 var description = bigPicture.querySelector('.social__caption');
-
 
 fullPhoto.src = dataPictures[0].url;
 likesCount.textContent = dataPictures[0].likes;
