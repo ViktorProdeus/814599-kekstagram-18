@@ -312,7 +312,7 @@ pin.addEventListener('mousedown', function (evt) {
       moveEvt.preventDefault();
 
       var coords = getCoords(lineEffect, moveEvt);
-      var value = (coords.x - shifts.x) / lineEffect.offsetWidth * PIN_POSITION_MAX;
+      var value = (coords.x + target.offsetWidth / 2 - shifts.x) / lineEffect.offsetWidth * PIN_POSITION_MAX;
 
       if (value < PIN_POSITION_MIN) {
         value = PIN_POSITION_MIN;
