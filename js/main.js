@@ -20,8 +20,11 @@ var SCALE_STEP = 25;
 var PIN_POSITION_MAX = 100;
 var PIN_POSITION_MIN = 0;
 
-var LEN_MESSAGE_MAX = 2;
-var LEN_MESSAGE_MIN = 1;
+var MESSAGE_LEN_MAX = 2;
+var MESSAGE_LEN_MIN = 1;
+
+var TAG_LEN_MAX = 20;
+var TAG_MAX = 5;
 
 // Функция, возвращающая случайное число в диапазоне
 var getRandomNumber = function (min, max) {
@@ -48,7 +51,7 @@ var getRandomElement = function (array) {
 };
 
 var generateMessage = function (array) {
-  var len = Math.random() > 0.5 ? LEN_MESSAGE_MIN : LEN_MESSAGE_MAX;
+  var len = Math.random() > 0.5 ? MESSAGE_LEN_MIN : MESSAGE_LEN_MAX;
   return shuffleArray(array).slice(0, len).join(' ');
 };
 
@@ -402,9 +405,9 @@ var onInputHashtagsValidate = function (evt) {
         textHashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки');
       } else if (tags[i].includes('#', 1)) {
         textHashtags.setCustomValidity('хэш-теги разделяются пробелами');
-      } else if (tags.length > 5) {
+      } else if (tags.length > TAG_MAX) {
         textHashtags.setCustomValidity('нельзя указать больше пяти хэш-тегов');
-      } else if (tags[i].length > 20) {
+      } else if (tags[i].length > TAG_LEN_MAX) {
         textHashtags.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
       } else if (arrayTags.includes(tags[i])) {
         textHashtags.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
