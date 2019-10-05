@@ -257,7 +257,7 @@ var setInputValue = function (element, value) {
 var getPinPosition = function (position) {
   pin.style.left = position;
   depth.style.width = pin.style.left;
-  var pinValue = parseInt(pin.style.left, 10) + '%';
+  var pinValue = parseInt(pin.style.left, 10);
   setInputValue(level, pinValue);
 };
 
