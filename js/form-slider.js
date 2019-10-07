@@ -48,7 +48,7 @@
     }
 
     value = Math.ceil(value);
-
+   
     target.style.left = value + '%';
 
     window.formPreview.getPinPosition(getCoords(window.formPreview.lineEffect, evt));
