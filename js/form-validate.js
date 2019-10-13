@@ -1,26 +1,26 @@
 'use strict';
 (function () {
-  window.formPreview.imgUpload.addEventListener('focus', function (evt) {
+  window.uploadPreview.form.addEventListener('focus', function (evt) {
     var target = evt.target;
 
     if (target.classList.contains('text__hashtags')) {
-      document.removeEventListener('keydown', window.formPreview.onPopupEscPress);
+      document.removeEventListener('keydown', window.uploadPreview.onPopupEscPress);
     }
 
     if (target.classList.contains('text__description')) {
-      document.removeEventListener('keydown', window.formPreview.onPopupEscPress);
+      document.removeEventListener('keydown', window.uploadPreview.onPopupEscPress);
     }
   }, true);
 
-  window.formPreview.imgUpload.addEventListener('blur', function (evt) {
+  window.uploadPreview.form.addEventListener('blur', function (evt) {
     var target = evt.target;
 
     if (target.classList.contains('text__hashtags')) {
-      document.addEventListener('keydown', window.formPreview.onPopupEscPress);
+      document.addEventListener('keydown', window.uploadPreview.onPopupEscPress);
     }
 
     if (target.classList.contains('text__description')) {
-      document.addEventListener('keydown', window.formPreview.onPopupEscPress);
+      document.addEventListener('keydown', window.uploadPreview.onPopupEscPress);
     }
   }, true);
 
@@ -28,14 +28,13 @@
     var target = evt.target;
 
     if (target.classList.contains('text__hashtags')) {
-      var textHashtags = window.formPreview.imgUpload.querySelector('.text__hashtags');
+      var textHashtags = window.uploadPreview.form.querySelector('.text__hashtags');
       var tags = textHashtags.value.trim().toLowerCase().split(/\s+/g);
       var arrayTags = [];
 
       textHashtags.setCustomValidity('');
 
       for (var i = 0; i < tags.length; i++) {
-
         if (tags[i].indexOf('#') !== 0) {
           textHashtags.setCustomValidity('хэш-тег начинается с символа # (решётка)');
         } else if (tags[i].length === 1 && tags[i].indexOf('#') === 0) {
@@ -55,5 +54,5 @@
     }
   };
 
-  window.formPreview.imgUpload.addEventListener('input', onInputHashtagsValidate);
+  window.uploadPreview.form.addEventListener('input', onInputHashtagsValidate);
 })();

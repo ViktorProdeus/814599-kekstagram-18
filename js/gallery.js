@@ -29,27 +29,39 @@
   };
 
   // Функция, успешного вывода данных
-  var successDataPictures = function (data) {
+  var getSuccessDataPictures = function (data) {
     var photosData = data;
     addtoContainer(data);
 
     var prewievPhotos = document.querySelectorAll('.picture');
 
     for (var i = 0; i < prewievPhotos.length; i++) {
-      window.onPreviewPhotoClick(prewievPhotos[i], photosData[i]);
-      window.onPreviewPhotoEnterPress(prewievPhotos[i], photosData[i]);
+      window.galleryPreview.onPhotoClick(prewievPhotos[i], photosData[i]);
+      window.galleryPreview.onPhotoEnterPress(prewievPhotos[i], photosData[i]);
     }
   };
 
   // Функция, вывода ошибки
-  var erorrMessage = function () {
-    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-    var main = document.querySelector('main');
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(errorTemplate);
-    main.appendChild(fragment);
-    return fragment;
-  };
+  var showErorrMessage = function () {
+    window.formSubmit.getMessage('error');
+    var errorMessage = document.querySelector('.error');
+    var errorBtns = document.querySelectorAll('.error__button');
+    for (var i = 0; i < errorBtns.length; i++) {
+      errorBtns[i].addEventListener('click', function () {
+        window.formSubmit.closeMessage();
+      });
 
-  window.backend.load(successDataPictures, erorrMessage);
+      errorMessage.addEventListener('click', function (evt) {
+        var target = evt.target;
+        if (target.closest('.error__inner') !== null) {
+          return;
+        }
+        errorMessage.remove();
+        evt.stopPropagation();
+      });
+
+      document.addEventListener('keydown', window.formSubmit.onMessageEscPress);
+    }
+  };
+  window.backend.load(getSuccessDataPictures, showErorrMessage);
 })();
