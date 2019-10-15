@@ -3,7 +3,7 @@
 (function () {
   var main = document.querySelector('main');
 
-  var ShowSuccess = function () {
+  var onSuccessMessageShow = function () {
     window.formSubmit.getMessage('success');
     var successMessage = document.querySelector('.success');
     var successBtn = document.querySelector('.success__button');
@@ -25,32 +25,10 @@
     document.addEventListener('keydown', window.formSubmit.onMessageEscPress);
   };
 
-  var showError = function () {
-    window.formSubmit.getMessage('error');
-    var errorMessage = document.querySelector('.error');
-    var errorBtns = document.querySelectorAll('.error__button');
-    for (var i = 0; i < errorBtns.length; i++) {
-      errorBtns[i].addEventListener('click', function () {
-        window.formSubmit.closeMessage();
-      });
-
-      errorMessage.addEventListener('click', function (evt) {
-        var target = evt.target;
-        if (target.closest('.error__inner') !== null) {
-          return;
-        }
-        errorMessage.remove();
-        evt.stopPropagation();
-      });
-
-      document.addEventListener('keydown', window.formSubmit.onMessageEscPress);
-    }
-  };
-
   var onFormSubmit = function (evt) {
     var formData = new FormData(window.uploadPreview.form);
 
-    window.backend.upload(formData, ShowSuccess, showError);
+    window.backend.upload(formData, onSuccessMessageShow, window.gallery.onErrorMessageShow);
     evt.preventDefault();
     window.uploadPreview.form.reset();
     window.uploadPreview.closePopup();
@@ -83,6 +61,6 @@
         document.querySelector('.error').remove();
       }
       document.removeEventListener('keydown', window.formSubmit.onMessageEscPress);
-    },
+    }
   };
 })();
