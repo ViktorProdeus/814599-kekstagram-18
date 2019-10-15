@@ -41,27 +41,29 @@
     }
   };
 
-  // Функция, вывода ошибки
-  var showErorrMessage = function () {
-    window.formSubmit.getMessage('error');
-    var errorMessage = document.querySelector('.error');
-    var errorBtns = document.querySelectorAll('.error__button');
-    for (var i = 0; i < errorBtns.length; i++) {
-      errorBtns[i].addEventListener('click', function () {
-        window.formSubmit.closeMessage();
-      });
+  window.gallery = {
+    onErrorMessageShow: function () {
+      window.formSubmit.getMessage('error');
+      var errorMessage = document.querySelector('.error');
+      var errorBtns = document.querySelectorAll('.error__button');
+      for (var i = 0; i < errorBtns.length; i++) {
+        errorBtns[i].addEventListener('click', function () {
+          window.formSubmit.closeMessage();
+        });
 
-      errorMessage.addEventListener('click', function (evt) {
-        var target = evt.target;
-        if (target.closest('.error__inner') !== null) {
-          return;
-        }
-        errorMessage.remove();
-        evt.stopPropagation();
-      });
+        errorMessage.addEventListener('click', function (evt) {
+          var target = evt.target;
+          if (target.closest('.error__inner') !== null) {
+            return;
+          }
+          errorMessage.remove();
+          evt.stopPropagation();
+        });
 
-      document.addEventListener('keydown', window.formSubmit.onMessageEscPress);
+        document.addEventListener('keydown', window.formSubmit.onMessageEscPress);
+      }
     }
   };
-  window.backend.load(getSuccessDataPictures, showErorrMessage);
+
+  window.backend.load(getSuccessDataPictures, window.gallery.onErrorMessageShow);
 })();
