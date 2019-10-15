@@ -35,7 +35,10 @@
       textHashtags.setCustomValidity('');
 
       for (var i = 0; i < tags.length; i++) {
-        if (tags[i].indexOf('#') !== 0) {
+
+        if (tags[i].trim() === '') {
+          textHashtags.setCustomValidity('');
+        } else if (tags[i].indexOf('#') !== 0) {
           textHashtags.setCustomValidity('хэш-тег начинается с символа # (решётка)');
         } else if (tags[i].length === 1 && tags[i].indexOf('#') === 0) {
           textHashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки');
