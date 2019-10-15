@@ -50,25 +50,11 @@
     socialComments.appendChild(fragment);
   };
 
-  window.changeFullPhoto = function (photo) {
+  var changeFullPhoto = function (photo) {
     showFullPhoto();
     renderFullPhoto(photo);
     hideElement(socialCommentCount);
     hideElement(commentsLoader);
-  };
-
-  window.onPreviewPhotoClick = function (thumbnail, photo) {
-    thumbnail.addEventListener('click', function () {
-      window.changeFullPhoto(photo);
-    });
-  };
-
-  window.onPreviewPhotoEnterPress = function (thumbnail, photo) {
-    thumbnail.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.data.ENTER_KEYCODE) {
-        window.changeFullPhoto(photo);
-      }
-    });
   };
 
   fullPhotoCancel.addEventListener('click', function () {
@@ -77,5 +63,21 @@
 
   var hideElement = function (element) {
     element.classList.add('visually-hidden');
+  };
+
+  window.galleryPreview = {
+    onPhotoClick: function (thumbnail, photo) {
+      thumbnail.addEventListener('click', function () {
+        changeFullPhoto(photo);
+      });
+    },
+
+    onPhotoEnterPress: function (thumbnail, photo) {
+      thumbnail.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === window.data.ENTER_KEYCODE) {
+          changeFullPhoto(photo);
+        }
+      });
+    }
   };
 })();

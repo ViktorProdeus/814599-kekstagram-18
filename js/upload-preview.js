@@ -16,17 +16,10 @@
 
   var openPopup = function () {
     imgUpload.classList.remove('hidden');
-    document.addEventListener('keydown', window.formPreview.onPopupEscPress);
-    window.formPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
+    document.addEventListener('keydown', window.uploadPreview.onPopupEscPress);
+    window.uploadPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
   };
 
-  var closePopup = function () {
-    imgUpload.classList.add('hidden');
-    getEffect('none');
-    uploadFile.value = '';
-    window.formPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
-    document.removeEventListener('keydown', window.formPreview.onPopupEscPress);
-  };
 
   uploadFile.addEventListener('change', function () {
     openPopup();
@@ -34,13 +27,13 @@
   });
 
   uploadCancel.addEventListener('click', function () {
-    closePopup();
+    window.uploadPreview.closePopup();
     imgUploadForm.reset();
   });
 
   uploadCancel.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.data.ENTER_KEYCODE) {
-      closePopup();
+      window.uploadPreview.closePopup();
     }
   });
 
@@ -60,8 +53,8 @@
   };
 
   var getEffect = function (effect) {
-    window.formPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
-    window.formPreview.getPinPosition(window.data.PIN_POSITION_MAX + '%');
+    window.uploadPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
+    window.uploadPreview.getPinPosition(window.data.PIN_POSITION_MAX + '%');
     sliderEffect.classList.remove('hidden');
     imgPrewiev.removeAttribute('style');
 
@@ -76,13 +69,13 @@
     if (target.classList.contains('scale__control--smaller')) {
       // получили текущее значение при уменьшении картинки
       scaleControl.value = changeImgSize(window.data.SCALE_STEP, window.data.SCALE_MIN, parseInt(scaleControl.value, 10));
-      window.formPreview.setInputValue(scaleControl, scaleControl.value);
+      window.uploadPreview.setInputValue(scaleControl, scaleControl.value);
     }
 
     if (target.classList.contains('scale__control--bigger')) {
       // получили текущее значение при уменьшении картинки
       scaleControl.value = changeImgSize(-(window.data.SCALE_STEP), window.data.SCALE_MAX, parseInt(scaleControl.value, 10));
-      window.formPreview.setInputValue(scaleControl, scaleControl.value);
+      window.uploadPreview.setInputValue(scaleControl, scaleControl.value);
     }
   };
 
@@ -116,15 +109,23 @@
     chooseEffect(target);
   });
 
-  window.formPreview = {
+  window.uploadPreview = {
     img: imgPrewiev,
     lineEffect: lineEffect,
     pin: pin,
-    imgUpload: imgUploadForm,
+    form: imgUploadForm,
+
+    closePopup: function () {
+      imgUpload.classList.add('hidden');
+      getEffect('none');
+      uploadFile.value = '';
+      window.uploadPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
+      document.removeEventListener('keydown', window.uploadPreview.onPopupEscPress);
+    },
 
     onPopupEscPress: function (evt) {
       if (evt.keyCode === window.data.ESC_KEYCODE) {
-        closePopup();
+        window.uploadPreview.closePopup();
         imgUpload.querySelector('#effect-none').checked = 'true';
       }
     },
@@ -138,7 +139,7 @@
       pin.style.left = position;
       depth.style.width = pin.style.left;
       var pinValue = parseInt(pin.style.left, 10);
-      this.setInputValue(level, pinValue);
+      window.uploadPreview.setInputValue(level, pinValue);
     }
   };
 })();
