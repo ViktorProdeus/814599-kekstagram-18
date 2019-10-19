@@ -26,6 +26,22 @@
       var randomElement = array[randomIndex];
 
       return randomElement;
+    },
+
+    getUniqueElement: function (arr, quantity) {
+      var uniqueElement = [];
+      var buffer = arr.slice();
+
+      for (var i = 0; i < quantity; i++) {
+        var randomIndex = window.util.getRandomNumber(0, buffer.length - 1);
+
+        if (randomIndex >= 0) {
+
+          uniqueElement.push(buffer[randomIndex]);
+          buffer.splice(randomIndex, 1);
+        }
+      }
+      return uniqueElement;
     }
   };
 })();

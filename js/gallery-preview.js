@@ -78,6 +78,16 @@
           changeFullPhoto(photo);
         }
       });
+    },
+
+    showPrewiev: function (photo) {
+      var prewievPhotos = document.querySelectorAll('.picture');
+
+      for (var i = 0; i < prewievPhotos.length; i++) {
+        window.galleryPreview.onPhotoClick(prewievPhotos[i], photo[i]);
+        window.galleryPreview.onPhotoEnterPress(prewievPhotos[i], photo[i]);
+      }
     }
+
   };
 })();
