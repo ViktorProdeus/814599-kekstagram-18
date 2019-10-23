@@ -35,24 +35,25 @@
       textHashtags.setCustomValidity('');
 
       for (var i = 0; i < tags.length; i++) {
+        var tag = tags[i];
 
-        if (tags[i].trim() === '') {
+        if (tag.trim() === '') {
           textHashtags.setCustomValidity('');
-        } else if (tags[i].indexOf('#') !== 0) {
+        } else if (tag.indexOf('#') !== 0) {
           textHashtags.setCustomValidity('хэш-тег начинается с символа # (решётка)');
-        } else if (tags[i].length === 1 && tags[i].indexOf('#') === 0) {
+        } else if (tag.length === 1 && tag.indexOf('#') === 0) {
           textHashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки');
-        } else if (tags[i].includes('#', 1)) {
+        } else if (tag.includes('#', 1)) {
           textHashtags.setCustomValidity('хэш-теги разделяются пробелами');
         } else if (tags.length > window.data.TAG_MAX) {
           textHashtags.setCustomValidity('нельзя указать больше пяти хэш-тегов');
-        } else if (tags[i].length > window.data.TAG_LEN_MAX) {
+        } else if (tag.length > window.data.TAG_LEN_MAX) {
           textHashtags.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
-        } else if (arrayTags.includes(tags[i])) {
+        } else if (arrayTags.includes(tag)) {
           textHashtags.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
         }
 
-        arrayTags.push(tags[i]);
+        arrayTags.push(tag);
       }
     }
   };
