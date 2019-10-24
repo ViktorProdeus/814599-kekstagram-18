@@ -59,14 +59,16 @@
   };
 
   var renderComments = function (image) {
-    if (image.comments.length > FIVE_COMMENTS) {
+    var allComments = image.comments.length;
+
+    if (allComments > FIVE_COMMENTS) {
       showElement(commentsLoader);
     } else {
       hideElement(commentsLoader);
     }
 
     var startLenComments = 0;
-    var lenComments = image.comments.length > FIVE_COMMENTS ? FIVE_COMMENTS : image.comments.length;
+    var lenComments = allComments > FIVE_COMMENTS ? FIVE_COMMENTS : allComments;
     var fragment = document.createDocumentFragment();
 
     for (var i = startLenComments; i < lenComments; i++) {
@@ -80,9 +82,9 @@
       var currentLenComments = document.querySelectorAll('.social__comment').length;
       lenComments = currentLenComments + FIVE_COMMENTS;
 
-      if (currentLenComments + FIVE_COMMENTS >= image.comments.length) {
+      if (currentLenComments + FIVE_COMMENTS >= allComments) {
         hideElement(commentsLoader);
-        lenComments = image.comments.length;
+        lenComments = allComments;
       }
 
       for (i = currentLenComments; i < lenComments; i++) {
