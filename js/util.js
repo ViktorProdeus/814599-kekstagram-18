@@ -29,7 +29,7 @@
     },
 
     getUniqueElement: function (arr, quantity) {
-      var uniqueElement = [];
+      var uniqueElements = [];
       var buffer = arr.slice();
 
       for (var i = 0; i < quantity; i++) {
@@ -37,11 +37,11 @@
 
         if (randomIndex >= 0) {
 
-          uniqueElement.push(buffer[randomIndex]);
+          uniqueElements.push(buffer[randomIndex]);
           buffer.splice(randomIndex, 1);
         }
       }
-      return uniqueElement;
+      return uniqueElements;
     }
   };
 })();
