@@ -31,6 +31,7 @@
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', onFullPhotoEscPress);
     commentsLoader.removeEventListener('click', window.onLoadComments);
+    socialComments.innerHTML = '';
   };
 
   var hideElement = function (element) {
@@ -58,16 +59,17 @@
   };
 
   var renderComments = function (image) {
-    if (image.comments.length > 5) {
+    if (image.comments.length > FIVE_COMMENTS) {
       showElement(commentsLoader);
     } else {
       hideElement(commentsLoader);
     }
 
+    var startLenComments = 0;
     var lenComments = image.comments.length > FIVE_COMMENTS ? FIVE_COMMENTS : image.comments.length;
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < lenComments; i++) {
+    for (var i = startLenComments; i < lenComments; i++) {
       getCloneComment(image, i, fragment);
     }
 
@@ -77,12 +79,12 @@
     window.onLoadComments = function () {
       var currentLenComments = document.querySelectorAll('.social__comment').length;
       lenComments = currentLenComments + FIVE_COMMENTS;
+
       if (currentLenComments + FIVE_COMMENTS >= image.comments.length) {
         hideElement(commentsLoader);
         lenComments = image.comments.length;
       }
 
-      fragment = document.createDocumentFragment();
       for (i = currentLenComments; i < lenComments; i++) {
         getCloneComment(image, i, fragment);
       }
@@ -92,7 +94,6 @@
 
     commentsLoader.addEventListener('click', window.onLoadComments);
   };
-
 
   var changeFullPhoto = function (photo) {
     showFullPhoto();
