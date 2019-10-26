@@ -728,6 +728,10 @@ main {
  * Блок добавления хэштегов и комментария к изображению
  */
 
+ input:invalid {
+  border: 2px solid red;
+ }
+
 .text {
   margin: 0;
   padding: 0;
