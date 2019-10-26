@@ -1,5 +1,8 @@
 'use strict';
 (function () {
+  var TAG_LEN_MAX = 20;
+  var TAG_MAX = 5;
+
   window.uploadPreview.form.addEventListener('focus', function (evt) {
     var target = evt.target;
 
@@ -45,9 +48,9 @@
           textHashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки');
         } else if (tag.includes('#', 1)) {
           textHashtags.setCustomValidity('хэш-теги разделяются пробелами');
-        } else if (tags.length > window.data.TAG_MAX) {
+        } else if (tags.length > TAG_MAX) {
           textHashtags.setCustomValidity('нельзя указать больше пяти хэш-тегов');
-        } else if (tag.length > window.data.TAG_LEN_MAX) {
+        } else if (tag.length > TAG_LEN_MAX) {
           textHashtags.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
         } else if (arrayTags.includes(tag)) {
           textHashtags.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');

@@ -49,7 +49,7 @@
     },
 
     onMessageEscPress: function (evt) {
-      if (evt.keyCode === window.data.ESC_KEYCODE) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
         window.formSubmit.closeMessage();
       }
     },

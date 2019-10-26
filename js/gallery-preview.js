@@ -15,7 +15,7 @@
   var fullPhotoCancel = fullPhotoContainer.querySelector('.big-picture__cancel');
 
   var onFullPhotoEscPress = function (evt) {
-    if (evt.keyCode === window.data.ESC_KEYCODE) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       closeFullPhoto();
     }
   };
@@ -118,13 +118,13 @@
 
     onPhotoEnterPress: function (thumbnail, photo) {
       thumbnail.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.data.ENTER_KEYCODE) {
+        if (evt.keyCode === window.util.ENTER_KEYCODE) {
           changeFullPhoto(photo);
         }
       });
     },
 
-    showPrewiev: function (photo) {
+    openPhoto: function (photo) {
       var prewievPhotos = document.querySelectorAll('.picture');
 
       for (var i = 0; i < prewievPhotos.length; i++) {

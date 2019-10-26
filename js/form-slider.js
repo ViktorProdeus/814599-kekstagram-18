@@ -1,10 +1,11 @@
 'use strict';
 
 (function () {
+  var PIN_POSITION_MIN = 0;
 
   var changeEffect = function (current) {
     var effect = 'grayscale';
-    var effectValue = current / window.data.PIN_POSITION_MAX;
+    var effectValue = current / window.uploadPreview.PIN_POSITION_MAX;
 
     if (window.uploadPreview.img.classList.contains('effects__preview--sepia')) {
       effect = 'sepia';
@@ -17,12 +18,12 @@
 
     if (window.uploadPreview.img.classList.contains('effects__preview--phobos')) {
       effect = 'blur';
-      effectValue = (current / window.data.PIN_POSITION_MAX * 3) + 'px';
+      effectValue = (current / window.uploadPreview.PIN_POSITION_MAX * 3) + 'px';
     }
 
     if (window.uploadPreview.img.classList.contains('effects__preview--heat')) {
       effect = 'brightness';
-      effectValue = current / window.data.PIN_POSITION_MAX * 2 + 1;
+      effectValue = current / window.uploadPreview.PIN_POSITION_MAX * 2 + 1;
     }
 
     window.uploadPreview.img.style.filter = effect + '(' + effectValue + ')';
@@ -38,13 +39,13 @@
 
   var calculatePinPosition = function (evt, target, shifts) {
     var coords = getCoords(window.uploadPreview.lineEffect, evt);
-    var value = (coords.x + target.offsetWidth / 2 - shifts.x) / window.uploadPreview.lineEffect.offsetWidth * window.data.PIN_POSITION_MAX;
+    var value = (coords.x + target.offsetWidth / 2 - shifts.x) / window.uploadPreview.lineEffect.offsetWidth * window.uploadPreview.PIN_POSITION_MAX;
 
-    if (value < window.data.PIN_POSITION_MIN) {
-      value = window.data.PIN_POSITION_MIN;
+    if (value < PIN_POSITION_MIN) {
+      value = PIN_POSITION_MIN;
     }
-    if (value > window.data.PIN_POSITION_MAX) {
-      value = window.data.PIN_POSITION_MAX;
+    if (value > window.uploadPreview.PIN_POSITION_MAX) {
+      value = window.uploadPreview.PIN_POSITION_MAX;
     }
 
     value = Math.ceil(value);

@@ -20,7 +20,7 @@
   };
 
   // Добавляем шаблон в контейнер для изображений
-  var addtoContainer = function (array) {
+  var addToContainer = function (array) {
     var fragment = document.createDocumentFragment();
     var picturesContainer = document.querySelector('.pictures');
 
@@ -44,8 +44,8 @@
   };
 
   var uploadPictures = function (allPictures) {
-    addtoContainer(allPictures);
-    window.galleryPreview.showPrewiev(allPictures);
+    addToContainer(allPictures);
+    window.galleryPreview.openPhoto(allPictures);
   };
 
   var photosData = [];

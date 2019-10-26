@@ -1,6 +1,12 @@
 'use strict';
 
 (function () {
+  var SCALE_MIN = 0;
+  var SCALE_MAX = 100;
+  var SCALE_STEP = 25;
+
+  var PIN_POSITION_MAX = 100;
+
   var imgUploadForm = document.querySelector('.img-upload__form');
   var imgUpload = imgUploadForm.querySelector('.img-upload__overlay');
   var uploadCancel = imgUpload.querySelector('.img-upload__cancel');
@@ -17,7 +23,7 @@
   var openPopup = function () {
     imgUpload.classList.remove('hidden');
     document.addEventListener('keydown', window.uploadPreview.onPopupEscPress);
-    window.uploadPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
+    window.uploadPreview.setInputValue(scaleControl, SCALE_MAX + '%');
   };
 
 
@@ -32,7 +38,7 @@
   });
 
   uploadCancel.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.ENTER_KEYCODE) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
       window.uploadPreview.closePopup();
     }
   });
@@ -44,17 +50,17 @@
   var changeImgSize = function (step, valueRange, current) {
     current -= step;
 
-    if (!checksRange(window.data.SCALE_MIN, window.data.SCALE_MAX, current)) {
+    if (!checksRange(SCALE_MIN, SCALE_MAX, current)) {
       current = valueRange;
     }
-    imgPrewiev.style.transform = 'scale(' + (current / window.data.SCALE_MAX) + ')';
+    imgPrewiev.style.transform = 'scale(' + (current / SCALE_MAX) + ')';
 
     return current + '%';
   };
 
   var getEffect = function (effect) {
-    window.uploadPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
-    window.uploadPreview.getPinPosition(window.data.PIN_POSITION_MAX + '%');
+    window.uploadPreview.setInputValue(scaleControl, SCALE_MAX + '%');
+    window.uploadPreview.getPinPosition(PIN_POSITION_MAX + '%');
     sliderEffect.classList.remove('hidden');
     imgPrewiev.removeAttribute('style');
 
@@ -68,13 +74,13 @@
   var chooseZoom = function (target) {
     if (target.classList.contains('scale__control--smaller')) {
       // получили текущее значение при уменьшении картинки
-      scaleControl.value = changeImgSize(window.data.SCALE_STEP, window.data.SCALE_MIN, parseInt(scaleControl.value, 10));
+      scaleControl.value = changeImgSize(SCALE_STEP, SCALE_MIN, parseInt(scaleControl.value, 10));
       window.uploadPreview.setInputValue(scaleControl, scaleControl.value);
     }
 
     if (target.classList.contains('scale__control--bigger')) {
       // получили текущее значение при уменьшении картинки
-      scaleControl.value = changeImgSize(-(window.data.SCALE_STEP), window.data.SCALE_MAX, parseInt(scaleControl.value, 10));
+      scaleControl.value = changeImgSize(-(SCALE_STEP), SCALE_MAX, parseInt(scaleControl.value, 10));
       window.uploadPreview.setInputValue(scaleControl, scaleControl.value);
     }
   };
@@ -110,6 +116,7 @@
   });
 
   window.uploadPreview = {
+    PIN_POSITION_MAX: PIN_POSITION_MAX,
     img: imgPrewiev,
     lineEffect: lineEffect,
     pin: pin,
@@ -119,12 +126,12 @@
       imgUpload.classList.add('hidden');
       getEffect('none');
       uploadFile.value = '';
-      window.uploadPreview.setInputValue(scaleControl, window.data.SCALE_MAX + '%');
+      window.uploadPreview.setInputValue(scaleControl, SCALE_MAX + '%');
       document.removeEventListener('keydown', window.uploadPreview.onPopupEscPress);
     },
 
     onPopupEscPress: function (evt) {
-      if (evt.keyCode === window.data.ESC_KEYCODE) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
         window.uploadPreview.closePopup();
         imgUpload.querySelector('#effect-none').checked = 'true';
       }
