@@ -37,7 +37,6 @@
   window.uploadPreview.form.addEventListener('submit', onFormSubmit);
 
   window.formSubmit = {
-    main: main,
 
     getMessage: function (message) {
       var template = document.querySelector('#' + message)
