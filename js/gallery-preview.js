@@ -110,13 +110,13 @@
   });
 
   window.galleryPreview = {
-    onPhotoClick: function (thumbnail, photo) {
+    addThumbnailClickHandler: function (thumbnail, photo) {
       thumbnail.addEventListener('click', function () {
         changeFullPhoto(photo);
       });
     },
 
-    onPhotoEnterPress: function (thumbnail, photo) {
+    addThumbnailEnterPressHandler: function (thumbnail, photo) {
       thumbnail.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.util.ENTER_KEYCODE) {
           changeFullPhoto(photo);
@@ -127,10 +127,10 @@
     openPhoto: function (photo) {
       var prewievPhotos = document.querySelectorAll('.picture');
 
-      for (var i = 0; i < prewievPhotos.length; i++) {
-        window.galleryPreview.onPhotoClick(prewievPhotos[i], photo[i]);
-        window.galleryPreview.onPhotoEnterPress(prewievPhotos[i], photo[i]);
-      }
+      prewievPhotos.forEach(function (prewievPhoto, i) {
+        window.galleryPreview.addThumbnailClickHandler(prewievPhoto, photo[i]);
+        window.galleryPreview.addThumbnailEnterPressHandler(prewievPhoto, photo[i]);
+      });
     }
 
   };

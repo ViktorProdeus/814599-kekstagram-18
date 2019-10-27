@@ -1,10 +1,15 @@
 'use strict';
 
 (function () {
+  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
+
   var main = document.querySelector('main');
 
+  var successTemplate = document.querySelector('#success')
+  .content.querySelector('.success');
+
   var onSuccessMessageShow = function () {
-    window.formSubmit.getMessage('success');
+    window.formSubmit.getMessage(successTemplate);
     var successMessage = document.querySelector('.success');
     var successBtn = document.querySelector('.success__button');
     successBtn.addEventListener('click', function () {
@@ -28,7 +33,7 @@
   var onFormSubmit = function (evt) {
     var formData = new FormData(window.uploadPreview.form);
 
-    window.backend.upload(formData, onSuccessMessageShow, window.gallery.onErrorMessageShow);
+    window.backend.makeRequest(URL_UPLOAD, onSuccessMessageShow, window.gallery.onErrorMessageShow, 'POST', formData);
     evt.preventDefault();
     window.uploadPreview.form.reset();
     window.uploadPreview.closePopup();
@@ -39,9 +44,7 @@
   window.formSubmit = {
 
     getMessage: function (message) {
-      var template = document.querySelector('#' + message)
-        .content.querySelector('.' + message);
-      var cloneMessage = template.cloneNode(true);
+      var cloneMessage = message.cloneNode(true);
       var fragment = document.createDocumentFragment();
       fragment.appendChild(cloneMessage);
       main.appendChild(fragment);
@@ -54,10 +57,13 @@
     },
 
     closeMessage: function () {
-      if (document.querySelector('.success')) {
-        document.querySelector('.success').remove();
+      var success = document.querySelector('.success');
+      var error = document.querySelector('.error');
+
+      if (success) {
+        success.remove();
       } else {
-        document.querySelector('.error').remove();
+        error.remove();
       }
       document.removeEventListener('keydown', window.formSubmit.onMessageEscPress);
     }

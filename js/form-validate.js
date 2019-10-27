@@ -3,6 +3,8 @@
   var TAG_LEN_MAX = 20;
   var TAG_MAX = 5;
 
+  var textHashtags = window.uploadPreview.form.querySelector('.text__hashtags');
+
   window.uploadPreview.form.addEventListener('focus', function (evt) {
     var target = evt.target;
 
@@ -31,15 +33,12 @@
     var target = evt.target;
 
     if (target.classList.contains('text__hashtags')) {
-      var textHashtags = window.uploadPreview.form.querySelector('.text__hashtags');
       var tags = textHashtags.value.trim().toLowerCase().split(/\s+/g);
       var arrayTags = [];
 
       textHashtags.setCustomValidity('');
 
-      for (var i = 0; i < tags.length; i++) {
-        var tag = tags[i];
-
+      tags.forEach(function (tag) {
         if (tag.trim() === '') {
           textHashtags.setCustomValidity('');
         } else if (tag.indexOf('#') !== 0) {
@@ -55,9 +54,8 @@
         } else if (arrayTags.includes(tag)) {
           textHashtags.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
         }
-
         arrayTags.push(tag);
-      }
+      });
     }
   };
 

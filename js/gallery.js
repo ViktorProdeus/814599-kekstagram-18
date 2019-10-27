@@ -1,15 +1,21 @@
 'use strict';
 
 (function () {
+  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
+  var FILTERS = ['filter-popular', 'filter-random', 'filter-discussed'];
+
+  var picturesTemplate = document.querySelector('#picture')
+    .content.querySelector('.picture');
+
+  var errorTemplate = document.querySelector('#error')
+    .content.querySelector('.error');
+
   var MAX_RANDOM_IMAGES = 10;
   var filtersContainer = document.querySelector('.img-filters');
   var filtersButtonsContainer = filtersContainer.querySelector('.img-filters__form');
 
   // Генерируем шаблон фотографий
   var renderUserPictures = function (picture) {
-    var picturesTemplate = document.querySelector('#picture')
-      .content.querySelector('.picture');
-
     var cloneInElement = picturesTemplate.cloneNode(true);
 
     cloneInElement.querySelector('.picture__img').src = picture.url;
@@ -24,9 +30,9 @@
     var fragment = document.createDocumentFragment();
     var picturesContainer = document.querySelector('.pictures');
 
-    for (var i = 0; i < array.length; i++) {
-      fragment.appendChild(renderUserPictures(array[i]));
-    }
+    array.forEach(function (element) {
+      fragment.appendChild(renderUserPictures(element));
+    });
 
     return picturesContainer.appendChild(fragment);
   };
@@ -60,11 +66,12 @@
 
   window.gallery = {
     onErrorMessageShow: function () {
-      window.formSubmit.getMessage('error');
+      window.formSubmit.getMessage(errorTemplate);
       var errorMessage = document.querySelector('.error');
       var errorBtns = document.querySelectorAll('.error__button');
-      for (var i = 0; i < errorBtns.length; i++) {
-        errorBtns[i].addEventListener('click', function () {
+
+      errorBtns.forEach(function (errorBtn) {
+        errorBtn.addEventListener('click', function () {
           window.formSubmit.closeMessage();
         });
 
@@ -78,7 +85,7 @@
         });
 
         document.addEventListener('keydown', window.formSubmit.onMessageEscPress);
-      }
+      });
     }
   };
 
@@ -87,13 +94,14 @@
     uploadPictures(pictures);
   });
 
-  window.backend.load(getSuccessDataPictures, window.gallery.onErrorMessageShow);
+
+  window.backend.makeRequest(URL_LOAD, getSuccessDataPictures, window.gallery.onErrorMessageShow, 'GET');
 
   var onButtonFilterClick = function (evt) {
     var target = evt.target;
-    var filters = ['filter-popular', 'filter-random', 'filter-discussed'];
 
-    if (filters.indexOf(target.id) !== -1) {
+
+    if (FILTERS.indexOf(target.id) !== -1) {
       var activeFilter = filtersButtonsContainer.querySelector('.img-filters__button--active');
       var images = photosData.slice();
 

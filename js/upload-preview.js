@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var SCALE_MIN = 0;
+  var SCALE_MIN = 25;
   var SCALE_MAX = 100;
   var SCALE_STEP = 25;
 

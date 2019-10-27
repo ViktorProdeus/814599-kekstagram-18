@@ -17,12 +17,10 @@
       for (var i = 0; i < quantity; i++) {
         var randomIndex = getRandomNumber(0, buffer.length - 1);
 
-        if (randomIndex >= 0) {
-
-          uniqueElements.push(buffer[randomIndex]);
-          buffer.splice(randomIndex, 1);
-        }
+        uniqueElements.push(buffer[randomIndex]);
+        buffer.splice(randomIndex, 1);
       }
+
       return uniqueElements;
     }
   };
